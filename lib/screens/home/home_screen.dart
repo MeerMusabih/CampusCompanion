@@ -161,6 +161,11 @@ class _HomeScreenState extends State<HomeScreen> {
                             onTap: () => Navigator.pushNamed(context, '/chat'),
                         ),
                         QuickActionButton(
+                            title: "Events",
+                            icon: Icons.event,
+                            onTap: () => Navigator.pushNamed(context, '/events'),
+                        ),
+                        QuickActionButton(
                             title: "Forums",
                             icon: Icons.people_outline,
                             onTap: () {

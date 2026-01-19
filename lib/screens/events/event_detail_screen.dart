@@ -6,6 +6,7 @@ import '../../providers/event_provider.dart';
 import '../../providers/auth_provider.dart';
 import '../../providers/theme_provider.dart';
 import '../../core/constants.dart';
+import '../../services/calendar_service.dart';
 class EventDetailScreen extends StatelessWidget {
   final EventModel event;
   const EventDetailScreen({super.key, required this.event});
@@ -89,6 +90,35 @@ class EventDetailScreen extends StatelessWidget {
                       fontSize: 16,
                       color: textColor,
                       height: 1.5,
+                    ),
+                  ),
+                  const SizedBox(height: 30),
+                  ElevatedButton.icon(
+                    onPressed: () async {
+                      try {
+                        final success = await CalendarService().addToGoogleCalendar(event);
+                        if (success && context.mounted) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(content: Text('✅ Event added to Google Calendar!')),
+                          );
+                        }
+                      } catch (e) {
+                        if (context.mounted) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(content: Text('❌ Error: $e')),
+                          );
+                        }
+                      }
+                    },
+                    icon: const Icon(Icons.sync),
+                    label: const Text("Sync to Google Calendar"),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.blueAccent,
+                      foregroundColor: Colors.white,
+                      minimumSize: const Size(double.infinity, 45),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8),
+                      ),
                     ),
                   ),
                   const SizedBox(height: 30),
